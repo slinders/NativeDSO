@@ -1,0 +1,8 @@
+{
+    "file_suffixes":  {
+        "hdbcds": {
+            "plugin_name": "com.sap.hana.di.cds",
+            "plugin_version": "12.0.0"
+        }
+    }
+}

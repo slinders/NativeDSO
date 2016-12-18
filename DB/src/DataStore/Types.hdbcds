@@ -1,0 +1,89 @@
+namespace DataWarehouse.DataStore;
+
+context Types {
+
+    const version : String(10) = '0.0.1';
+
+    type id               : Integer; 
+    type posit            : Integer;
+    type msgNumber        : Integer;
+    type entityRef        : String(256);
+    type elementRef       : String(256);
+    type userName         : String(256);
+    type subscriberName   : String(256);
+    type procedureName    : String(256);
+    type checksum         : String(40);
+    type JSONstring       : LargeString;
+    type msgText          : LargeString;
+    type description      : LargeString;
+
+    type entityCategoryEnum : String(30) enum {
+        CHANGE_LOG              = 'CHANGE_LOG';
+        ACTIVE_DATA             = 'ACTIVE_DATA';
+        ACTIVATION_QUEUE        = 'ACTIVATION_QUEUE';
+        ACTIVATION_QUEUE_UNION  = 'ACTIVATION_QUEUE_UNION';
+        OPERATION_HISTORY       = 'OPERATION_HISTORY';
+        AFFECTED_REQUESTS       = 'AFFECTED_REQUESTS';
+        REQUESTS                = 'REQUESTS';
+        LOG_MESSAGES            = 'LOG_MESSAGES';
+        AGGREGATION_HISTORY     = 'AGGREGATION_HISTORY';
+        SUBSCRIBERS             = 'SUBSCRIBERS';
+        ID_GENERATOR            = 'ID_GENERATOR';
+        RUNNING_OPERATIONS      = 'RUNNING_OPERATIONS';
+    };
+
+    /* Remark: it is (currently) not possible to use types with enum as column in a CDS entity.
+    **   Therefore there are two types; one with and one without enum-definition
+    */
+
+    type recordMode : String(1);
+    type recordModeEnum : recordMode enum {
+        NEW_IMAGE         = 'N';
+        DELETE_IMAGE      = 'D';
+        REVERSE_IMAGE     = 'R';
+        AFTER_IMAGE       = ' ';
+        BEFORE_IMAGE      = 'X';
+    };
+
+    type operation : String(20);
+    type operationEnum : operation enum {
+        LOAD               = 'LOAD';
+        ACTIVATE           = 'ACTIVATE';
+        ROLLBACK           = 'ROLLBACK';
+        REQUEST_DELETION   = 'REQUEST_DELETION';
+        SELECTIVE_DELETION = 'SELECTIVE_DELETION';
+    };
+
+    type requestType: String(30);
+    type requestTypeEnum : requestType enum {
+        LOAD_REQUEST       = 'LOAD_REQUEST';
+        ACTIVATION_REQUEST = 'ACTIVATION_REQUEST';
+    };
+
+    type aggregation : String(3);
+    type aggregationEnum : aggregation enum {
+        MAX             = 'MAX';
+        MIN             = 'MIN';
+        SUM             = 'SUM';
+        MOV             = 'MOV';
+        NOP             = 'NOP';
+    };
+
+    type status : String (10);
+    type statusEnum : status enum {
+        RUNNING   = 'RUNNING';
+        FINISHED  = 'FINISHED';
+        FAILED    = 'FAILED';
+        UNDEFINED = 'UNDEFINED';
+    };
+
+    type msgType : String(1);
+    type msgTypeEnum : msgType enum {
+        SUCCESS = 'S';
+        INFO    = 'I';
+        WARNING = 'W';
+        ERROR   = 'E';
+        ABORT   = 'A';
+        FAILURE = 'X';
+    };
+}

@@ -1,0 +1,117 @@
+namespace managedData;
+
+using DataWarehouse.DataStore::Structures.inboundQueueKey;
+using DataWarehouse.DataStore::Structures.inboundQueueAttributes;
+using DataWarehouse.DataStore::Structures.changeLogKey;
+using DataWarehouse.DataStore::Structures.changeLogAttributes;
+using DataWarehouse.DataStore::Structures.operationHistoryKey;
+using DataWarehouse.DataStore::Structures.operationHistoryAttributes;
+using DataWarehouse.DataStore::Structures.aggregationHistoryKey;
+using DataWarehouse.DataStore::Structures.aggregationHistoryAttributes;
+using DataWarehouse.DataStore::Structures.affectedRequestsKey;
+using DataWarehouse.DataStore::Structures.logMessagesKey;
+using DataWarehouse.DataStore::Structures.logMessagesAttributes;
+using DataWarehouse.DataStore::Structures.subscribersKey;
+using DataWarehouse.DataStore::Structures.subscribersAttributes;
+using DataWarehouse.DataStore::Structures.runningOperationsKey;
+using DataWarehouse.DataStore::Structures.idGeneratorKey;
+using DataWarehouse.DataStore::Structures.idGeneratorAttributes;
+using DataWarehouse.DataStore::Annotations as DataStore;
+
+context NDSO{
+ 
+@DataStore.isDSO
+@DataStore.entity.activeData: 'active_data'
+@DataStore.entity.changeLog: 'change_log'
+@DataStore.entity.activationQueue: ['inbound_queue']
+@DataStore.entity.operationHistory: 'operationHistory'
+@DataStore.entity.aggregationHistory: 'aggregationHistory'
+@DataStore.entity.logMessages: 'logMessages'
+@DataStore.entity.affectedRequests: 'affectedRequests'
+@DataStore.entity.subscribers: 'subscribers'
+@DataStore.entity.runningOperations: 'runningOperations'
+@DataStore.entity.idGenerator: 'idGen'
+@DataStore.computeChecksum: true
+@DataStore.snapshotSupport: false
+context person{
+ 
+@DataStore.entityCategory: #ACTIVE_DATA
+entity active_data{
+ key id : Integer not null;
+firstName : String(50) not null;
+lastName : String(50) not null;
+city : String(30) not null;
+}technical configuration {
+	group name DSO_1 group type "sap.dwf.dso" group subtype ACTIVE;
+};
+
+@DataStore.entityCategory: #ACTIVATION_QUEUE
+entity inbound_queue{
+ key technicalKey : inboundQueueKey;
+technicalAttributes : inboundQueueAttributes;
+@DataStore.aggregation: #MOV
+id : Integer not null;
+@DataStore.aggregation: #MOV
+firstName : String(50) not null;
+@DataStore.aggregation: #MOV
+lastName : String(50) not null;
+@DataStore.aggregation: #MOV
+city : String(30) not null;
+}technical configuration {
+	group name DSO_1 group type "sap.dwf.dso" group subtype QUEUE;
+};
+
+@DataStore.entityCategory: #CHANGE_LOG
+entity change_log{
+ key technicalKey : changeLogKey;
+technicalAttributes : changeLogAttributes;
+id : Integer not null;
+firstName : String(50) not null;
+lastName : String(50) not null;
+city : String(30) not null;
+}technical configuration {
+	group name DSO_1 group type "sap.dwf.dso" group subtype CHANGE_LOG;
+};
+
+@DataStore.entityCategory: #OPERATION_HISTORY
+entity operationHistory{
+ key technicalKey : operationHistoryKey;
+technicalAttributes : operationHistoryAttributes;
+};
+
+@DataStore.entityCategory: #AGGREGATION_HISTORY
+entity aggregationHistory{
+ key technicalKey : aggregationHistoryKey;
+technicalAttributes : aggregationHistoryAttributes;
+};
+
+@DataStore.entityCategory: #AFFECTED_REQUESTS
+entity affectedRequests{
+ key technicalKey : affectedRequestsKey;
+};
+
+@DataStore.entityCategory: #LOG_MESSAGES
+entity logMessages{
+ key technicalKey : logMessagesKey;
+technicalAttributes : logMessagesAttributes;
+};
+
+@DataStore.entityCategory: #SUBSCRIBERS
+entity subscribers{
+ key technicalKey : subscribersKey;
+technicalAttributes : subscribersAttributes;
+};
+
+@DataStore.entityCategory: #RUNNING_OPERATIONS
+entity runningOperations{
+ key technicalKey : runningOperationsKey;
+};
+
+@DataStore.entityCategory: #ID_GENERATOR
+entity idGen{
+ key technicalKey : idGeneratorKey;
+technicalAttributes : idGeneratorAttributes;
+};
+};
+
+};

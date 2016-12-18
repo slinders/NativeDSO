@@ -1,0 +1,8 @@
+namespace localSources;
+
+entity person {
+   key id        : Integer;
+       firstName : String(50);
+       lastName  : String(50);
+       city      : String(30);
+}

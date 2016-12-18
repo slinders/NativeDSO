@@ -1,0 +1,95 @@
+namespace DataWarehouse.DataStore; 
+
+using DataWarehouse.DataStore::Types as dwt; 
+
+context Structures { 
+    type inboundQueueKey{
+        loadId : dwt.id;
+        recordNo : dwt.id;
+    };
+    type inboundQueueAttributes {
+        recordMode : dwt.recordMode;
+    };
+
+
+    type changeLogKey {
+        activationId : dwt.id;
+        recordNo : dwt.id;
+    };
+    type changeLogAttributes {
+        recordMode : dwt.recordMode;
+    };
+
+
+
+    // Generator for IDs  (if possible implement as sequence)
+    type idGeneratorKey { 
+        id       : dwt.id; 
+    };
+    type idGeneratorAttributes {
+        type     : dwt.requestType;  // { OPERATION_REQUEST, LOAD_REQUEST, ACTIVATION_REQUEST }
+    };
+
+
+    type operationHistoryKey { 
+        operationId         : dwt.id; 
+    }; 
+    type operationHistoryAttributes { 
+        operation        : dwt.operation; // {ACTIVATION, ROLLBACK, LOAD; SELECTIVE_DELETION}
+        userName         : dwt.userName; 
+        startTimestamp   : UTCTimestamp; 
+        lastTimestamp    : UTCTimestamp;    // should be updated each time the status changes
+        status           : dwt.status;      // { RUNNING, FINISHED, FAILED, UNDEFINED }
+        checksumAT       : dwt.checksum;    // only for operations which affect the AT
+        checksumCL       : dwt.checksum;    // only for operations which affect the CL
+        operationDetails : dwt.JSONstring;  // JSON-String with details. In case of:
+                                            // - Sel.Deletion: WHERE-condition
+    }; 
+
+
+    type runningOperationsKey {
+        operationId  : dwt.id;
+    };
+
+
+    type logMessagesKey { 
+        operationId  : dwt.id;         // foreign key of operationHistory
+        posit        : dwt.posit;      // ensure uniqueness and correct order
+    };
+    type logMessagesAttributes { 
+        timestamp    : UTCTimestamp;
+        msgType      : dwt.msgType; 
+        msgNumber    : dwt.msgNumber;
+        msgText      : dwt.msgText; 
+    };
+
+
+    type affectedRequestsKey { 
+        operationId     : dwt.id;    
+        requestId       : dwt.id;
+    }; 
+
+
+    // Table contains the aggregation behavior, which was used during the activation of the request.
+    // Table-entry is written in same transaction in which stored procedure is executed.
+    type aggregationHistoryKey { 
+        requestId            : dwt.id; 
+        activationQueueName  : dwt.entityRef;
+        elementName          : dwt.elementRef; 
+    };
+    type aggregationHistoryAttributes { 
+        aggregation          : dwt.aggregation; 
+    };
+
+
+    type subscribersKey {
+        subscriberName     : dwt.subscriberName;
+    };
+    type subscribersAttributes {
+        description        : dwt.description;
+        userName           : dwt.userName;
+        creationTimestamp  : UTCTimestamp;
+        maxRequest         : dwt.id;
+        pushNotification   : dwt.procedureName;
+    };
+};
