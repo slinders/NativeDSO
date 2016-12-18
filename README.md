@@ -21,4 +21,4 @@ GRANT CATALOG READ TO SBSS_USER;
 
 --another way to find your SBSS user
 
-select * from granted_roles where UPPER(role_name) like '%<PROJECT_NAME>%' and GRANTEE like 'SBSS_%';
+select * from granted_roles where UPPER(role_name) like '%PROJECT_NAME%' and GRANTEE like 'SBSS_%';
