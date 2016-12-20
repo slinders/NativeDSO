@@ -1,0 +1,14 @@
+{
+  "DSO_ACTIVATE_CHANGES": {
+    "target": {
+      "object": "DSO_ACTIVATE_CHANGES",
+      "schema": "SYS"
+    }
+  },
+  "DSO_ROLLBACK_CHANGES": {
+    "target": {
+      "object": "DSO_ROLLBACK_CHANGES",
+      "schema": "SYS"
+    }
+  }
+}

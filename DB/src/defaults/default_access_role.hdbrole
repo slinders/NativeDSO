@@ -1,0 +1,10 @@
+{
+  "role" : {
+    "name" : "default_access_role",
+    "schema_roles" : [
+	  {
+	    "names" : [ "DSO_ACTIVATE_CHANGES_ROLE", "DSO_ROLLBACK_CHANGES_ROLE" ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "role" : {
+    "name" : "DSO_ACTIVATE_CHANGES_ROLE",
+    "object_privileges" : [
+	  {
+	    "name" : "DSO_ACTIVATE_CHANGES",
+        "type" : "PROCEDURE",
+        "privileges" : [ "EXECUTE" ]
+      }
+    ]
+  }
+}
